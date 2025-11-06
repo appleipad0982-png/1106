@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>棒球知識互動課程</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- H5P 核心檔案 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/h5p/1.24.0/styles/h5p.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/h5p/1.24.0/js/h5p-standalone-main.min.js"></script>
+</head>
+<body>
+    <!-- 課程標題區 -->
+    <header class="course-header">
+        <div class="header-content">
+            <div class="baseball-icon">⚾</div>
+            <h1>棒球知識互動課程</h1>
+            <p class="subtitle">從基礎到進階，全面掌握棒球知識</p>
+        </div>
+    </header>
+
+    <!-- 進度條 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="progress-text" id="progressText">課程進度: 0%</span>
+    </div>
+
+    <!-- 主要內容區 -->
+    <main class="course-content">
+        <!-- 課程導覽 -->
+        <nav class="course-nav">
+            <h2>📚 課程章節</h2>
+            <ul id="chapterList">
+                <li class="chapter-item active" data-chapter="1">
+                    <span class="chapter-number">1</span>
+                    <span class="chapter-title">棒球基礎知識</span>
+                </li>
+                <li class="chapter-item" data-chapter="2">
+                    <span class="chapter-number">2</span>
+                    <span class="chapter-title">比賽規則與戰術</span>
+                </li>
+                <li class="chapter-item" data-chapter="3">
+                    <span class="chapter-number">3</span>
+                    <span class="chapter-title">球員位置與職責</span>
+                </li>
+                <li class="chapter-item" data-chapter="4">
+                    <span class="chapter-number">4</span>
+                    <span class="chapter-title">進階技巧與策略</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 課程內容顯示區 -->
+        <section class="lesson-area">
+            <!-- 第一章：棒球基礎知識 -->
+            <div class="chapter-content active" id="chapter1">
+                <h2>⚾ 第一章：棒球基礎知識</h2>
+                
+                <div class="content-card">
+                    <h3>🏟️ 棒球場地介紹</h3>
+                    <div class="field-diagram">
+                        <!-- 更接近真實比例與外觀的棒球場 SVG -->
+                        <svg viewBox="0 0 400 400" class="baseball-field" role="img" aria-label="棒球場場地圖示">
+                            <!-- 外野草皮（大圓） -->
+                            <circle cx="200" cy="200" r="180" fill="#2e8b57"/>
+
+                            <!-- 外野圍欄（弧線） -->
+                            <circle cx="200" cy="200" r="175" fill="none" stroke="#3b6b3b" stroke-width="6"/>
+
+                            <!-- 警告地帶（外野靠近圍欄的淺色帶） -->
+                            <circle cx="200" cy="200" r="150" fill="none" stroke="#4da36d" stroke-width="18" opacity="0.6"/>
+
+                            <!-- 界外線（從本壘延伸到外野邊緣） -->
+                            <line x1="200" y1="250" x2="30" y2="40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="200" y1="250" x2="370" y2="40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+
+                            <!-- 內野土區（菱形） -->
+                            <polygon points="200,150 270,200 200,250 130,200" fill="#DEB887" stroke="#8B4513" stroke-width="3"/>
+
+                            <!-- 投手丘（靠近中間偏本壘） -->
+                            <circle cx="200" cy="195" r="10" fill="#c57b39" stroke="#8B4513" stroke-width="2"/>
+
+                            <!-- 本壘板（五角形） -->
+                            <path d="M200 260 L190 250 L190 240 L210 240 L210 250 Z" fill="white" stroke="#333" stroke-width="1"/>
+
+                            <!-- 壘包（方形，稍微旋轉呈菱形） -->
+                            <rect x="192" y="242" width="16" height="16" fill="white" stroke="#333" transform="rotate(45 200 250)"/>
+                            <rect x="242" y="192" width="16" height="16" fill="white" stroke="#333" transform="rotate(45 250 200)"/>
+                            <rect x="192" y="142" width="16" height="16" fill="white" stroke="#333" transform="rotate(45 200 150)"/>
+                            <rect x="142" y="192" width="16" height="16" fill="white" stroke="#333" transform="rotate(45 150 200)"/>
+
+                            <!-- 本壘附近的打擊區（左右打者方框） -->
+                            <rect x="175" y="232" width="18" height="12" fill="rgba(255,255,255,0.6)" stroke="#fff" stroke-width="1" transform="rotate(-8 184 238)"/>
+                            <rect x="207" y="232" width="18" height="12" fill="rgba(255,255,255,0.6)" stroke="#fff" stroke-width="1" transform="rotate(8 216 238)"/>
+
+                            <!-- 一二三壘與本壘標記文字（較小且不干擾視覺） -->
+                            <text x="200" y="270" text-anchor="middle" font-size="12" fill="#ffffff" stroke="#000" stroke-width="0.2">本壘</text>
+                            <text x="275" y="205" text-anchor="middle" font-size="12" fill="#ffffff" stroke="#000" stroke-width="0.2">一壘</text>
+                            <text x="200" y="135" text-anchor="middle" font-size="12" fill="#ffffff" stroke="#000" stroke-width="0.2">二壘</text>
+                            <text x="125" y="205" text-anchor="middle" font-size="12" fill="#ffffff" stroke="#000" stroke-width="0.2">三壘</text>
+
+                            <!-- 外野草皮的紋理：簡單的弧形線條增加層次 -->
+                            <g stroke="#2a6b45" stroke-width="1" fill="none" opacity="0.25">
+                                <path d="M200 25 A175 175 0 0 0 200 375"/>
+                                <path d="M200 45 A155 155 0 0 0 200 355"/>
+                                <path d="M200 65 A135 135 0 0 0 200 335"/>
+                            </g>
+
+                        </svg>
+                    </div>
+                    <p>棒球場分為<strong>內野</strong>和<strong>外野</strong>，內野是菱形區域，四個角落分別是本壘、一壘、二壘、三壘。</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>🎯 基本術語</h3>
+                    <ul class="term-list">
+                        <li><strong>安打 (Hit)</strong> - 打者將球擊入場內並安全上壘</li>
+                        <li><strong>全壘打 (Home Run)</strong> - 打者一棒將球擊出全壘打牆外</li>
+                        <li><strong>三振 (Strikeout)</strong> - 投手投出三個好球讓打者出局</li>
+                        <li><strong>保送 (Walk)</strong> - 投手投出四壞球讓打者直接上一壘</li>
+                    </ul>
+                </div>
+
+                <!-- H5P 互動測驗區 -->
+                <div class="h5p-container">
+                    <h3>📝 章節測驗：基礎知識測試</h3>
+                    <div class="quiz-card">
+                        <div class="question">
+                            <p><strong>問題 1：</strong>棒球場內野有幾個壘包？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q1" value="a">
+                                    <span>A. 3個</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q1" value="b">
+                                    <span>B. 4個</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q1" value="c">
+                                    <span>C. 5個</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p><strong>問題 2：</strong>投手投出幾個好球會讓打者三振出局？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q2" value="a">
+                                    <span>A. 2個</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q2" value="b">
+                                    <span>B. 3個</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q2" value="c">
+                                    <span>C. 4個</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p><strong>問題 3：</strong>以下哪個不是得分方式？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q3" value="a">
+                                    <span>A. 全壘打</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q3" value="b">
+                                    <span>B. 跑回本壘</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q3" value="c">
+                                    <span>C. 三振</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" onclick="checkChapter1()">提交答案</button>
+                        <div class="result" id="result1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二章：比賽規則與戰術 -->
+            <div class="chapter-content" id="chapter2">
+                <h2>📋 第二章：比賽規則與戰術</h2>
+                
+                <div class="content-card">
+                    <h3>⚖️ 基本規則</h3>
+                    <ul class="rule-list">
+                        <li>每場比賽共 <strong>9局</strong>，每局分上下半局</li>
+                        <li>每隊輪流進攻和防守，<strong>3人出局</strong>後攻守交換</li>
+                        <li>跑者踩過本壘即得 <strong>1分</strong></li>
+                        <li>9局結束時得分較高的隊伍獲勝</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🎮 常見戰術</h3>
+                    <div class="tactics-grid">
+                        <div class="tactic-card">
+                            <h4>🏃 盜壘</h4>
+                            <p>跑者趁投手投球時偷跑到下一個壘包</p>
+                        </div>
+                        <div class="tactic-card">
+                            <h4>🎯 觸擊</h4>
+                            <p>輕觸球讓球滾動，幫助跑者推進</p>
+                        </div>
+                        <div class="tactic-card">
+                            <h4>🔄 雙殺</h4>
+                            <p>一次守備讓兩名跑者出局</p>
+                        </div>
+                        <div class="tactic-card">
+                            <h4>⚡ 強迫取分</h4>
+                            <p>滿壘時保送自動推進得分</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 章節測驗 -->
+                <div class="h5p-container">
+                    <h3>📝 章節測驗：規則與戰術</h3>
+                    <div class="quiz-card">
+                        <div class="question">
+                            <p><strong>問題 1：</strong>一場正式棒球比賽有幾局？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q4" value="a">
+                                    <span>A. 7局</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q4" value="b">
+                                    <span>B. 9局</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q4" value="c">
+                                    <span>C. 12局</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p><strong>問題 2：</strong>什麼是「盜壘」？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q5" value="a">
+                                    <span>A. 偷竊壘包</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q5" value="b">
+                                    <span>B. 趁投球時跑到下一壘</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q5" value="c">
+                                    <span>C. 擊出內野安打</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" onclick="checkChapter2()">提交答案</button>
+                        <div class="result" id="result2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第三章：球員位置與職責 -->
+            <div class="chapter-content" id="chapter3">
+                <h2>👥 第三章：球員位置與職責</h2>
+                
+                <div class="content-card">
+                    <h3>🎯 防守位置圖</h3>
+                    <div class="positions-grid">
+                        <div class="position-card">
+                            <div class="position-number">1</div>
+                            <h4>投手 (Pitcher)</h4>
+                            <p>站在投手丘上，負責投球</p>
+                        </div>
+                        <div class="position-card">
+                            <div class="position-number">2</div>
+                            <h4>捕手 (Catcher)</h4>
+                            <p>蹲在本壘後方接球</p>
+                        </div>
+                        <div class="position-card">
+                            <div class="position-number">3</div>
+                            <h4>一壘手</h4>
+                            <p>守備一壘附近區域</p>
+                        </div>
+                        <div class="position-card">
+                            <div class="position-number">4</div>
+                            <h4>二壘手</h4>
+                            <p>守備一二壘之間</p>
+                        </div>
+                        <div class="position-card">
+                            <div class="position-number">5</div>
+                            <h4>三壘手</h4>
+                            <p>守備三壘附近區域</p>
+                        </div>
+                        <div class="position-card">
+                            <div class="position-number">6</div>
+                            <h4>游擊手</h4>
+                            <p>守備二三壘之間</p>
+                        </div>
+                        <div class="position-card">
+                            <div class="position-number">7-9</div>
+                            <h4>外野手</h4>
+                            <p>左外野、中外野、右外野</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 章節測驗 -->
+                <div class="h5p-container">
+                    <h3>📝 章節測驗：位置與職責</h3>
+                    <div class="quiz-card">
+                        <div class="question">
+                            <p><strong>問題 1：</strong>誰負責投球？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q6" value="a">
+                                    <span>A. 捕手</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q6" value="b">
+                                    <span>B. 投手</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q6" value="c">
+                                    <span>C. 一壘手</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p><strong>問題 2：</strong>外野手有幾位？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q7" value="a">
+                                    <span>A. 2位</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q7" value="b">
+                                    <span>B. 3位</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q7" value="c">
+                                    <span>C. 4位</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" onclick="checkChapter3()">提交答案</button>
+                        <div class="result" id="result3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第四章：進階技巧與策略 -->
+            <div class="chapter-content" id="chapter4">
+                <h2>🚀 第四章：進階技巧與策略</h2>
+                
+                <div class="content-card">
+                    <h3>⚡ 投球技巧</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <h4>🔥 快速球</h4>
+                            <p>速度最快，直線球路</p>
+                        </div>
+                        <div class="skill-card">
+                            <h4>🌀 變化球</h4>
+                            <p>球路會彎曲變化</p>
+                        </div>
+                        <div class="skill-card">
+                            <h4>⬇️ 下墜球</h4>
+                            <p>接近本壘時快速下墜</p>
+                        </div>
+                        <div class="skill-card">
+                            <h4>🎯 控球力</h4>
+                            <p>準確投到想要的位置</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>🎯 打擊技巧</h3>
+                    <ul class="skill-list">
+                        <li><strong>選球</strong> - 判斷好球壞球，不亂揮棒</li>
+                        <li><strong>揮棒姿勢</strong> - 正確的站姿和揮棒動作</li>
+                        <li><strong>打擊時機</strong> - 在最佳擊球點揮棒</li>
+                        <li><strong>配球預測</strong> - 猜測投手的配球策略</li>
+                    </ul>
+                </div>
+
+                <!-- 綜合測驗 -->
+                <div class="h5p-container">
+                    <h3>📝 綜合測驗：進階知識</h3>
+                    <div class="quiz-card">
+                        <div class="question">
+                            <p><strong>問題 1：</strong>速度最快的球路是？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q8" value="a">
+                                    <span>A. 快速球</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q8" value="b">
+                                    <span>B. 變化球</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q8" value="c">
+                                    <span>C. 下墜球</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p><strong>問題 2：</strong>打擊時最重要的是？</p>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="q9" value="a">
+                                    <span>A. 用力揮棒</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q9" value="b">
+                                    <span>B. 選球和打擊時機</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="q9" value="c">
+                                    <span>C. 快速揮棒</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" onclick="checkChapter4()">提交答案</button>
+                        <div class="result" id="result4"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 課程完成畫面 -->
+    <div class="completion-overlay" id="completionOverlay">
+        <div class="completion-card">
+            <div class="trophy">🏆</div>
+            <h2>恭喜完成課程！</h2>
+            <p>您已完成所有章節的學習</p>
+            <div class="final-score">
+                <h3>總成績</h3>
+                <div class="score-display" id="finalScore">0%</div>
+            </div>
+            <button class="restart-btn" onclick="restartCourse()">重新開始</button>
+        </div>
+    </div>
+
+    <script src="sketch.js"></script>
+</body>
+</html>
